@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import style from  './App.module.css';
 import ContactList from './components/ContactList/ContactList';
-import dataContacts from './JSON/dataContacts.json';
+import dataContacts from './JSON/dataContacts.json'
 import ContactForm from './components/ContactForm/ContactForm';
 import SearchBox from './components/SearchBox/SearchBox';
 
