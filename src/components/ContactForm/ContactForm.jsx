@@ -4,6 +4,11 @@ import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
 import style from './ContactForm.module.css';
 
+import { addContact } from '../../redux/contactsSlice';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+
 const INITIAL_VALUES = {
   id:"",
   name:"",
@@ -19,22 +24,27 @@ number: Yup.string().required("Number is required").matches(phoneNumberRegex, "I
  });
 
 
-const ContactForm = ({onAddContact}) => {
-
-
-
-  const handleSubmit = (values, actions) => {
-    onAddContact({
-      id: nanoid(),
-      ...values,
-    });
-    actions.resetForm();
-  };
+const ContactForm = () => {
+  const contacts = useSelector((state) => state.contacts.value);
+  const dispatch = useDispatch();
 
   const nameId = useId();
   const phoneId = useId();
 
+
+  const handleSubmit = (values, actions) => {
+    const newContact = {
+     name: values.name,
+     number: values.number,
+     id: nanoid(),
+   };
+   actions.resetForm();
+    dispatch(addContact(newContact));;
+ };
+
+
   return (
+
     <Formik
     initialValues={INITIAL_VALUES}
     validationSchema={AddContactSchema}
